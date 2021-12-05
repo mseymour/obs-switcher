@@ -5,7 +5,8 @@ module.exports = function(grunt) {
    * Project configuration.
    */
 
-  const babel = require('@rollup/plugin-babel').default;
+  const babel       = require('@rollup/plugin-babel').default,
+        terser      = require('rollup-plugin-terser').terser;
 
   grunt.initConfig({
     // Metadata
@@ -88,7 +89,8 @@ module.exports = function(grunt) {
             babelHelpers: 'bundled',
             presets: ['@babel/preset-env'],
             exclude: './node_modules/**'
-          })
+          }),
+          terser()
         ]
       },
       build: {
@@ -130,12 +132,23 @@ module.exports = function(grunt) {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['default']
       },
-      build: {
+      htdpcs: {
         files: [
-          'src/assets/**/*.{scss,js}',
           'src/htdocs/**/*'
         ],
-        tasks: ['default']
+        tasks: ['build-htdocs']
+      },
+      scss: {
+        files: [
+          'src/assets/**/*.scss'
+        ],
+        tasks: ['build-scss']
+      },
+      js: {
+        files: [
+          'src/assets/**/*.js'
+        ],
+        tasks: ['build-js']
       }
     }
   });
@@ -144,7 +157,11 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   // Tasks
-  grunt.registerTask('default', ['copy', 'stylelint', 'dart-sass', 'postcss', 'jshint', 'rollup']);
-  grunt.registerTask('server', ['connect', 'watch']);
+  grunt.registerTask('build-htdocs', ['copy']);
+  grunt.registerTask('build-scss', ['stylelint', 'dart-sass', 'postcss']);
+  grunt.registerTask('build-js', ['jshint', 'rollup']);
+  grunt.registerTask('build', ['build-htdocs', 'build-scss', 'build-js']);
+  grunt.registerTask('serve', ['connect', 'watch']);
+  grunt.registerTask('default', ['build']);
 
 };

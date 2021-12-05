@@ -53,7 +53,7 @@ module.exports = function(grunt) {
     'dart-sass': {
       dist: {
         files: {
-          'dist/assets/main.css': 'src/scss/main.scss'
+          'dist/assets/main.css': 'src/assets/scss/main.scss'
         }
       }
     },
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
       options: {
         map: {
             inline: false,
-            annotation: 'dist/assets/scss/'
+            annotation: 'dist/assets/'
         },
         processors: [
           require('autoprefixer')(),

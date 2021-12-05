@@ -25,6 +25,7 @@
     "normalize.css": "^8.0.1",
     "obs-websocket-js": "^4.0.3",
     "postcss": "^8.4.4",
+    "postcss-scss": "^4.0.2",
     "sass": "^1.44.0",
     "stylelint": "^14.1.0"
   }
